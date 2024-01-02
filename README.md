@@ -79,17 +79,17 @@ Go into the Issue3 folder and open the solution.  There you will find four proje
 
 If you run the .Net 4.8 project WpfApp, it works fine.   If you run the .Net 8.0 app, it crashes.  As with issue 2, I have a couple of #define statements with different attempts at loading from the plugins folder, however neither of these approaches work.
 
-*Dependency Graph*
+## Dependency Graph
 WpfApp -> DependencyLibContract
 DependencyLibImpl -> DependencyLibContract, SatelliteDependency.
 
-*Output Structure*
-bin\
-    WpfApp.exe
-    DependencyLibContract.dll
-    SatelliteDependency.dll
-    plugins\
-        DependencyLibImpl.dll
+## Output Structure
+bin\\
+&nbsp;&nbsp;&nbsp;WpfApp.exe
+&nbsp;&nbsp;&nbsp;DependencyLibContract.dll
+&nbsp;&nbsp;&nbsp;SatelliteDependency.dll
+&nbsp;&nbsp;&nbsp;plugins\\
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DependencyLibImpl.dll
 
 The .Net 8 dependency graph and output structure match the .Net 4.8, just with the prefix of Core in front of the assemblies.
 
