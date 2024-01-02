@@ -63,3 +63,34 @@ If you try this in .Net 8 by running the *CoreWpfApp* application, it will crash
 
 At the top of the *CoreWpfApp\App.xaml.cs* file, you can comment out/in the `#define` statements to try the workaround.  This seems to work just fine.  Once again, I'm wondering what changed between .Net Framework and .Net Core.
 
+# Issue 3 - Failing to load assemblies when loading from a subfolder.
+Loading from a subfolder works OK.  The problem happens when that DLL in a subfolder depends on an unloaded DLL in the base folder.   Using .Net 4.8, this works fine.  Using .Net 8, I can't get this to work.  I have no workaround short of no longer using a subfolder to isolate my DLLs.
+
+Go into the Issue3 folder and open the solution.  There you will find four projects.
+1. **WpfApp** - This is a .Net 4.8 WPF application.  I customized the CSPROJ to use the SDK format.  The main thing is that it outputs to a common folder.
+2. **DependencyLibContract** - This is a .Net 4.8 class library. The CSPROJ was also customized to output to the same common bin folder.
+3. **DependencyLibImpl** - This is a .Net 4.8 class library. The CSPROJ was also customized to output to a subfolder under the common bin folder named plugins.
+4. **SatelliteDependency** - This is a .Net 4.8 class library that DependencyLibImpl depends on. This outputs to the common bin folder.
+5. **CoreWpfApp** - This is a .Net 8 WPF test application.  
+6. **CoreDependencyContract** - This is a .Net 8 class library. The CSPROJ was also customized to output to the same common bin folder.
+7. **CoreDependencyImpl** - This is a .Net 8 class library. The CSPROJ was also customized to output to the same common bin folder.
+8. **CoreSatelliteDependency** - This is a .Net 8 class library that CoreDependencyLibImpl depends on.  This outputs to the common bin folder.
+
+
+If you run the .Net 4.8 project WpfApp, it works fine.   If you run the .Net 8.0 app, it crashes.  As with issue 2, I have a couple of #define statements with different attempts at loading from the plugins folder, however neither of these approaches work.
+
+*Dependency Graph*
+WpfApp -> DependencyLibContract
+DependencyLibImpl -> DependencyLibContract, SatelliteDependency.
+
+*Output Structure*
+bin\
+    WpfApp.exe
+    DependencyLibContract.dll
+    SatelliteDependency.dll
+    plugins\
+        DependencyLibImpl.dll
+
+The .Net 8 dependency graph and output structure match the .Net 4.8, just with the prefix of Core in front of the assemblies.
+
+Go to the App.OnStartup method(s) to review how the files are loaded.
