@@ -5,10 +5,10 @@ There are three different issues I have found related to loading and referencing
 
 Go into the Issue1 folder and open the solution.  There you will find four projects.
 
-1. WpfApp - This is a .Net 4.8 WPF application.  I customized the CSPROJ to mimic close to what the product I am using does.  The main thing is that it outputs to a common folder.
-2. DependencyLib - This is a .Net 4.8 class library. The CSPROJ was also customized to output to the same common bin folder.
-3. CoreWpfApp - This is a .Net 8 WPF application.  I customized the CSPROJ to mimic close to what the product I am using does.  The main thing is that it outputs to a common folder.
-4. CoreDependencyLib - This is a .Net 8 class library. The CSPROJ was also customized to output to the same common bin folder.
+1. **WpfApp** - This is a .Net 4.8 WPF application.  I customized the CSPROJ to mimic close to what the product I am using does.  The main thing is that it outputs to a common folder.
+2. **DependencyLib** - This is a .Net 4.8 class library. The CSPROJ was also customized to output to the same common bin folder.
+3. **CoreWpfApp** - This is a .Net 8 WPF application.  I customized the CSPROJ to mimic close to what the product I am using does.  The main thing is that it outputs to a common folder.
+4. **CoreDependencyLib** - This is a .Net 8 class library. The CSPROJ was also customized to output to the same common bin folder.
 
 If you look in the CSPROJ file of WpfApp, you will see a project reference to DependencyLib, where it has the Private attribute set to False.
 If you look in the CSPROJ file of CoreWpfApp, you will see a project reference to CoreDependencyLib, where it has the Private attribute set to False.
